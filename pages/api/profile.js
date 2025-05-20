@@ -49,6 +49,17 @@ async function handler(req, res) {
         data: { name: user.name, lastName: user.lastName, email: user.email },
       });
   }
-}
+  else if(req.method==="DELETE"){
+    try{
+      await User.deleteOne({email:session.user.email});
+      res.status(200).json({ status: "success", message: "User deleted" });
+    }catch(err){
+       res
+        .status(500)
+        .json({ status: "failed", message: "Error in deleting from database" });
+    }
+    }
+  }
+
 
 export default handler;

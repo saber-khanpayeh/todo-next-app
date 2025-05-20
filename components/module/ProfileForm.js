@@ -7,8 +7,16 @@ function ProfileForm({
   setName,
   setLastName,
   setPassword,
-  submitHandler
+  updateProfile,
+  setData,
+  setUpdateProfile,
+  submitHandler,
 }) {
+  const updateHandler = () => {
+    setData(null);
+    setUpdateProfile(0);
+    submitHandler();
+  };
   return (
     <>
       <div className="profile-form__input">
@@ -40,7 +48,11 @@ function ProfileForm({
           />
         </div>
       </div>
-      <button onClick={submitHandler}>Submit</button>
+      {updateProfile ? (
+        <button onClick={updateHandler}>confirm</button>
+      ) : (
+        <button onClick={submitHandler}>Submit</button>
+      )}
     </>
   );
 }

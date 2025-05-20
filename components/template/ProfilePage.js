@@ -7,26 +7,39 @@ function ProfilePage() {
   const [name, setName] = useState("");
   const [lastName, setLastName] = useState("");
   const [password, setPassword] = useState("");
-  const [data,setData]=useState(null);
+  const [updateProfile, setUpdateProfile] = useState(0);
+  const [data, setData] = useState(null);
 
-  useEffect(()=>{
+  useEffect(() => {
     fetchProfile();
-  },[]);
-  const fetchProfile=async()=>{
-    const res=await fetch("/api/profile");
-    const data=await res.json();
-    if(data.status==="success"&&data.data.name&&data.data.lastName){
-        setData(data.data);
+  }, []);
+  useEffect(() => {
+    if (updateProfile) {
+      setName(data.name);
+      setLastName(data.lastName);
+      //console.log("update");
     }
-  }
-  const submitHandler = async() => {
+  }, [updateProfile]);
+  const fetchProfile = async () => {
+    const res = await fetch("/api/profile");
+    const data = await res.json();
+    //console.log("fetchData",data);
+    if (data.status === "success" && data.data.name && data.data.lastName) {
+     // console.log("fetch");
+      setData(data.data);
+    }
+  };
+  const submitHandler = async () => {
     const res = await fetch("/api/profile", {
-        method: "POST",
-        body: JSON.stringify({ name,lastName,password }),
-        headers: { "Content-Type": "application/json" },
-      });
-      const data = await res.json();
-      console.log(data);
+      method: "POST",
+      body: JSON.stringify({ name, lastName, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+   // console.log(data);
+    if (data.status === "success") {
+      await fetchProfile();
+    }
   };
   return (
     <div className="profile-form">
@@ -34,17 +47,22 @@ function ProfilePage() {
         <CgProfile />
         Profile
       </h2>
-      {data?(<ProfileData data={data}/>):(      
+      {data && !updateProfile ? (
+        <ProfileData data={data} setUpdateProfile={setUpdateProfile} />
+      ) : (
         <ProfileForm
-        name={name}
-        lastName={lastName}
-        password={password}
-        setName={setName}
-        setLastName={setLastName}
-        setPassword={setPassword}
-        submitHandler={submitHandler}
-      />)}
-
+          name={name}
+          lastName={lastName}
+          password={password}
+          setName={setName}
+          setLastName={setLastName}
+          setPassword={setPassword}
+          setData={setData}
+          updateProfile={updateProfile}
+          setUpdateProfile={setUpdateProfile}
+          submitHandler={submitHandler}
+        />
+      )}
     </div>
   );
 }

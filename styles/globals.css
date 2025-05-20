@@ -227,6 +227,24 @@ button {
   font-weight: 500;
 }
 
+.profile-data__btns{
+  margin-top: 25px;
+  display: flex;
+  flex-direction: column;
+    align-self: flex-start;
+    align-items: unset !important;
+    width: fit-content;
+    gap:20px
+}
+.profile-data__btns button{
+  font-size: 1.2rem;
+  width: fit-content;
+  text-align: center;
+}
+.profile-data__btns button.second{
+  color: #f7f7f7;
+    background-color: #ff0000ba;
+}
 .home-page {
   display: flex;
   justify-content: space-between;
