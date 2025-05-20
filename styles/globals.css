@@ -274,7 +274,22 @@ button {
   padding: 15px;
   margin: 25px 15px;
 }
-
+.tasks .tasks__card--top{
+    margin: 0;
+    display: flex;
+    justify-content: unset;
+    flex-direction: row-reverse;
+    width: 100%;
+    margin-bottom: 20px;
+    gap: 15px;
+    margin-left: auto;
+}
+.tasks .tasks__card--top button{
+  padding: 5px 10px;
+  background-color: #f0f0f0;
+  border-radius: 5px;
+  font-size: 1.2rem;
+}
 .tasks .tasks__card span {
   width: 50%;
   height: 3px;
@@ -302,14 +317,14 @@ button {
   font-weight: 400;
 }
 
-.tasks .tasks__card div {
+.tasks .tasks__card--bottom {
   display: flex;
   justify-content: space-between;
   background-color: #fff;
   margin: 25px 0 0 0;
 }
 
-.tasks .tasks__card div button {
+.tasks .tasks__card--bottom button {
   padding: 5px 10px;
   font-size: 1rem;
   border: none;
@@ -318,14 +333,16 @@ button {
   align-items: center;
 }
 
-.tasks .tasks__card div .button-next {
+.tasks .tasks__card--bottom .button-next {
   background-color: #cdf8ee;
   color: #03ab81;
+  margin-left: auto;
 }
 
-.tasks .tasks__card div .button-back {
+.tasks .tasks__card--bottom .button-back {
   background-color: #f8eccf;
   color: #e5a000;
+  margin-right: auto;
 }
 
 .signin-form {

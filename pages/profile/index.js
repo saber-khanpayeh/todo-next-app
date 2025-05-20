@@ -1,7 +1,6 @@
 import React from "react";
-import ProfilePage from "../components/template/ProfilePage";
 import { getSession } from "next-auth/react";
-
+import ProfilePage from "../../components/template/ProfilePage";
 function Profile() {
   return <ProfilePage />;
 }

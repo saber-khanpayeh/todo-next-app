@@ -1,7 +1,8 @@
-import connectDB from "../../utils/connectDB";
+import connectDB from "../../../utils/connectDB";
 import { getSession } from "next-auth/react";
-import User from "../../model/User";
-import { sortTodos } from "../../utils/sortTodos";
+import User from "../../../model/User";
+import { sortTodos } from "../../../utils/sortTodos";
+
 
 async function handler(req, res) {
   try {
