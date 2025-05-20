@@ -4,6 +4,7 @@ import { BiLeftArrow, BiRightArrow } from "react-icons/bi";
 import { LuTrash2 } from "react-icons/lu";
 import { RiMastodonLine } from "react-icons/ri";
 import { TbEdit } from "react-icons/tb";
+import { toast } from "react-toastify";
 
 function Tasks({ data, fetchTodos, next, back }) {
   const router = useRouter();
@@ -19,15 +20,26 @@ function Tasks({ data, fetchTodos, next, back }) {
   const editHandler = (id) => {
     router.push(`edit-todo/${id}`);
   };
+  const deleteHandler = async (id) => {
+    const res = await fetch(`/api/todos/delete/${id}`, {
+      method: "DELETE",
+      headers: { "Content-Type": "application/json" },
+    });
+    const data=await res.json();
+    if(data.status==="success"){
+      toast.info("task successfully deleted!");
+      fetchTodos();
+    }
+  };
   return (
     <div className="tasks">
       {data?.map((task) => (
         <div key={task._id} className="tasks__card">
           <div className="tasks__card--top">
-            <button onClick={()=>editHandler(task._id)}>
+            <button onClick={() => editHandler(task._id)}>
               <TbEdit />
             </button>
-            <button>
+            <button onClick={() => deleteHandler(task._id)}>
               <LuTrash2 />
             </button>
           </div>

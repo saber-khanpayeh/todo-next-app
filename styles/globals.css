@@ -310,7 +310,15 @@ button {
 .tasks .tasks__card span.done {
   background-color: #14d3e2;
 }
-
+.home-page__empty{
+  display: flex;
+  justify-content: center;
+  text-align: center;
+}
+.home-page__empty .btn{
+ background: none;
+ font-size: 5rem;
+}
 .tasks .tasks__card h4 {
   color: #494a52;
   font-size: 1.1rem;

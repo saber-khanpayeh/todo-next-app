@@ -1,5 +1,8 @@
 import React, { useEffect, useState } from "react";
 import Tasks from "../module/Tasks";
+import { TbNotesOff } from "react-icons/tb";
+import { MdFormatListBulletedAdd } from "react-icons/md";
+import EmptyTodo from "../element/EmptyTodo";
 
 function HomePage() {
   const [todos, setTodos] = useState([]);
@@ -15,20 +18,46 @@ function HomePage() {
   return (
     <div className="home-page">
       <div className="home-page--todo">
-        <p >Todo</p>
-        <Tasks data={todos.todo} fetchTodos={fetchTodos} next="inProgress"/>
+        <p>Todo</p>
+        {todos.todo ? (
+          <Tasks data={todos.todo} fetchTodos={fetchTodos} next="inProgress" />
+        ) : (
+          <EmptyTodo todoType="todo" />
+        )}
       </div>
       <div className="home-page--inProgress">
-        <p >In Progress</p>
-        <Tasks data={todos.inProgress} fetchTodos={fetchTodos} next="review" back="todo"/>
+        <p>In Progress</p>
+        {todos.inProgress ? (
+          <Tasks
+            data={todos.inProgress}
+            fetchTodos={fetchTodos}
+            next="review"
+            back="todo"
+          />
+        ) : (
+          <EmptyTodo todoType="inProgress" />
+        )}
       </div>
       <div className="home-page--review">
-        <p >Review</p>
-        <Tasks data={todos.review} fetchTodos={fetchTodos} next="done" back="inProgress"/>
+        <p>Review</p>
+        {todos.review ? (
+          <Tasks
+            data={todos.review}
+            fetchTodos={fetchTodos}
+            next="done"
+            back="inProgress"
+          />
+        ) : (
+          <EmptyTodo todoType="review" />
+        )}
       </div>
       <div className="home-page--done">
-        <p >Done</p>
-        <Tasks data={todos.done} fetchTodos={fetchTodos} back="review"/>
+        <p>Done</p>
+        {todos.done ? (
+          <Tasks data={todos.done} fetchTodos={fetchTodos} back="review" />
+        ) : (
+          <EmptyTodo todoType="done" />
+        )}
       </div>
     </div>
   );

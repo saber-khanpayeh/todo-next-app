@@ -13,12 +13,21 @@ function ManageTodo({ page, data }) {
     const router=useRouter();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("todo");
+  useEffect(()=>{
+    if(router.pathname==="/add-todo")
+    {
+        const {status}=router.query;
+        if(status)
+            setStatus(status);
+    }
+  },[router])
   useEffect(() => {
     if (page === "edit" && data) {
       setTitle(data.title);
       setStatus(data.status);
     }
   }, [data]);
+  
   const addHandler = async () => {
     const res = await fetch("/api/todos", {
       method: "POST",
