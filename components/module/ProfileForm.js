@@ -1,22 +1,27 @@
-import React from "react";
+import { useRouter } from "next/router";
+import React, { useState } from "react";
 
-function ProfileForm({
-  name,
-  lastName,
-  password,
-  setName,
-  setLastName,
-  setPassword,
-  updateProfile,
-  setData,
-  setUpdateProfile,
-  submitHandler,
-}) {
-  const updateHandler = () => {
-    setData(null);
-    setUpdateProfile(0);
-    submitHandler();
+function ProfileForm({ data }) {
+  const router = useRouter();
+  const pathname = router.pathname;
+  const [name, setName] = useState(data?.name || "");
+  const [lastName, setLastName] = useState(data?.lastName || "");
+  const [password, setPassword] = useState("");
+
+  const submitHandler = async () => {
+    const res = await fetch("/api/profile", {
+      method: "POST",
+      body: JSON.stringify({ name, lastName, password }),
+      headers: { "Content-Type": "application/json" },
+    });
+    const data = await res.json();
+    // console.log(data);
+    if (data.status === "success") {
+      if (pathname === "/edit-profile") router.push("/profile");
+      else router.push("/profile?state=profile-create");
+    }
   };
+
   return (
     <>
       <div className="profile-form__input">
@@ -48,11 +53,9 @@ function ProfileForm({
           />
         </div>
       </div>
-      {updateProfile ? (
-        <button onClick={updateHandler}>confirm</button>
-      ) : (
-        <button onClick={submitHandler}>Submit</button>
-      )}
+      <button onClick={submitHandler}>
+        {pathname === "/edit-profile" ? "Confirm" : "Submit"}
+      </button>
     </>
   );
 }

@@ -3,11 +3,11 @@ import { useRouter } from "next/router";
 import React, { useEffect } from "react";
 import { toast } from "react-toastify";
 
-function ProfileData({ data, setUpdateProfile }) {
+function ProfileData({ data }) {
   const router = useRouter();
-  const updateProfile = () => {
-    setUpdateProfile(1);
-  };
+  const updateProfile=()=>{
+    router.push("/edit-profile");
+  }
   const deleteHandler = async () => {
     const res = await fetch("/api/profile", {
       method: "DELETE",

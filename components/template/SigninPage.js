@@ -2,23 +2,24 @@ import { signIn, useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function SigninPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const {status} = useSession();
+  const { status } = useSession();
   useEffect(() => {
-    
     if (status === "authenticated") router.replace("/");
   }, [status]);
-  const loginHandler = async () => {
+  const credentialsSignin = async () => {
     const res = await signIn("credentials", {
       email,
       password,
       redirect: false,
     });
-    if (!res.error) router.push("/");
+    if (!res?.error) router.push("/");
+   
   };
   return (
     <div className="signin-form">
@@ -35,7 +36,7 @@ function SigninPage() {
         value={password}
         onChange={(e) => setPassword(e.target.value)}
       />
-      <button onClick={loginHandler}>Login</button>
+      <button onClick={credentialsSignin}>Login</button>
       <div>
         <p>Don't have account?</p>
         <Link href="/signup">Sign up</Link>

@@ -2,24 +2,19 @@ import React, { useEffect, useState } from "react";
 import { CgProfile } from "react-icons/cg";
 import ProfileForm from "../module/ProfileForm";
 import ProfileData from "../module/ProfileData";
+import { useRouter } from "next/router";
 
 function ProfilePage() {
-  const [name, setName] = useState("");
-  const [lastName, setLastName] = useState("");
-  const [password, setPassword] = useState("");
-  const [updateProfile, setUpdateProfile] = useState(0);
   const [data, setData] = useState(null);
+  const router=useRouter()
+  
+  useEffect(() => {
+    const pathname=router.pathname;
+    const {state}=router.query;
+    if(pathname==="/profile" ||state==="profile-create")
+      fetchProfile();
+  }, [router]);
 
-  useEffect(() => {
-    fetchProfile();
-  }, []);
-  useEffect(() => {
-    if (updateProfile) {
-      setName(data.name);
-      setLastName(data.lastName);
-      //console.log("update");
-    }
-  }, [updateProfile]);
   const fetchProfile = async () => {
     const res = await fetch("/api/profile");
     const data = await res.json();
@@ -29,39 +24,17 @@ function ProfilePage() {
       setData(data.data);
     }
   };
-  const submitHandler = async () => {
-    const res = await fetch("/api/profile", {
-      method: "POST",
-      body: JSON.stringify({ name, lastName, password }),
-      headers: { "Content-Type": "application/json" },
-    });
-    const data = await res.json();
-   // console.log(data);
-    if (data.status === "success") {
-      await fetchProfile();
-    }
-  };
+  
   return (
     <div className="profile-form">
       <h2>
         <CgProfile />
         Profile
       </h2>
-      {data && !updateProfile ? (
-        <ProfileData data={data} setUpdateProfile={setUpdateProfile} />
+      {data ? (
+        <ProfileData data={data} />
       ) : (
-        <ProfileForm
-          name={name}
-          lastName={lastName}
-          password={password}
-          setName={setName}
-          setLastName={setLastName}
-          setPassword={setPassword}
-          setData={setData}
-          updateProfile={updateProfile}
-          setUpdateProfile={setUpdateProfile}
-          submitHandler={submitHandler}
-        />
+        <ProfileForm/>
       )}
     </div>
   );
