@@ -72,7 +72,9 @@ aside li {
 aside li a {
   margin-left: 10px;
 }
-
+aside li.selected a,aside li.selected svg{
+  color: #3f47f4;
+}
 li {
   list-style: none;
 }
@@ -312,8 +314,12 @@ button {
   width: 50%;
   height: 3px;
   display: block;
-  margin-bottom: 30px;
+  margin-bottom: 25px;
   border-radius: 2px;
+}
+.tasks .tasks__card .svg{
+  font-size: 1.2rem;
+  margin-bottom: 10px;
 }
 
 .tasks .tasks__card span.todo {

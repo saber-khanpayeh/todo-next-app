@@ -44,7 +44,7 @@ function Tasks({ data, fetchTodos, next, back }) {
             </button>
           </div>
           <span className={task.status}></span>
-          <RiMastodonLine />
+          <RiMastodonLine className="svg" />
           <h4>{task.title}</h4>
           <div className="tasks__card--bottom">
             {back ? (
