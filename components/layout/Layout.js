@@ -1,10 +1,7 @@
 import { signOut, useSession } from "next-auth/react";
 import Link from "next/link";
-import React from "react";
-import { BiMessageSquareAdd } from "react-icons/bi";
+import React, { useEffect, useState } from "react";
 import { FiLogOut } from "react-icons/fi";
-import { RxDashboard } from "react-icons/rx";
-import { VscListSelection } from "react-icons/vsc";
 import Sidebar from "../element/Sidebar";
 
 function Layout({children}) {
@@ -16,13 +13,11 @@ function Layout({children}) {
     <div className="container">
       <header>
         <p>Planno App</p>
-        {status==="authenticated"?<button onClick={logoutHandler}>Logout<FiLogOut/></button>:null}
+        {status==="authenticated"?<button className="logout--first" onClick={logoutHandler}>Logout<FiLogOut/></button>:null}
+        {status==="authenticated"?<button className="logout--second" onClick={logoutHandler}><FiLogOut/></button>:null}
       </header>
       <div className="container--main">
-        <aside>
-          <p>Welcome 👋</p>
-          <Sidebar/>
-        </aside>
+        <Sidebar/>
         <section>{children}</section>
       </div>
     </div>
