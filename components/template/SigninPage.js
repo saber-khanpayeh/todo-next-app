@@ -18,8 +18,16 @@ function SigninPage() {
       password,
       redirect: false,
     });
-    if (!res?.error) router.push("/");
-   
+    if (!res?.error) {
+      toast.success("Your logged in successfully!", {
+        autoClose: 1000,
+      });
+      setTimeout(()=>{
+        window.location.href="/";
+      },1000);
+    }else{
+      toast.error(res?.error);
+    }
   };
   return (
     <div className="signin-form">
@@ -38,7 +46,7 @@ function SigninPage() {
       />
       <button onClick={credentialsSignin}>Login</button>
       <div>
-        <p>Don't have account?</p>
+        <p>Don&#39;t have account?</p>
         <Link href="/signup">Sign up</Link>
       </div>
     </div>

@@ -10,24 +10,28 @@ import { FaRegEdit } from "react-icons/fa";
 import { useRouter } from "next/router";
 
 function ManageTodo({ page, data }) {
-    const router=useRouter();
+  const router = useRouter();
   const [title, setTitle] = useState("");
   const [status, setStatus] = useState("todo");
-  useEffect(()=>{
-    if(router.pathname==="/add-todo")
-    {
-        const {status}=router.query;
-        if(status)
-            setStatus(status);
+  const toastOptions = {
+    position: "top-center",
+    autoClose: 1000,
+    pauseOnHover: false,
+    hideProgressBar: true,
+  };
+  useEffect(() => {
+    if (router.pathname === "/add-todo") {
+      const { status } = router.query;
+      if (status) setStatus(status);
     }
-  },[router])
+  }, [router]);
   useEffect(() => {
     if (page === "edit" && data) {
       setTitle(data.title);
       setStatus(data.status);
     }
   }, [data]);
-  
+
   const addHandler = async () => {
     const res = await fetch("/api/todos", {
       method: "POST",
@@ -38,7 +42,7 @@ function ManageTodo({ page, data }) {
     if (data.status === "success") {
       setTitle("");
       setStatus("todo");
-      toast.success("Todo created!");
+      toast.success("Todo created!",toastOptions);
     }
   };
   const editHandler = async () => {
@@ -51,10 +55,10 @@ function ManageTodo({ page, data }) {
     if (response.status === "success") {
       setTitle("");
       setStatus("todo");
-      toast.success("Todo edit successfull!");
-      setTimeout(()=>{
+      toast.success("Todo edit successfull!",toastOptions);
+      setTimeout(() => {
         router.push("/");
-      },500)
+      }, 500);
     }
   };
   return (

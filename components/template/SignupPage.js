@@ -2,12 +2,13 @@ import { useSession } from "next-auth/react";
 import Link from "next/link";
 import { useRouter } from "next/router";
 import React, { useEffect, useState } from "react";
+import { toast } from "react-toastify";
 
 function SignupPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const router = useRouter();
-  const {status} = useSession();
+  const { status } = useSession();
   useEffect(() => {
     if (status === "authenticated") router.replace("/");
   }, [status]);
@@ -19,7 +20,16 @@ function SignupPage() {
     });
     const data = await res.json();
     console.log(data);
-    if (data.status === "success") router.push("/signin");
+    if (data.status === "success") {
+      router.push("/signin");
+      toast.success(data.message, {
+        autoClose: 2000,
+      });
+    } else if (data.status === "failed") {
+      toast.error(data.message, {
+        autoClose: 2000,
+      });
+    }
   };
   return (
     <div className="signin-form">

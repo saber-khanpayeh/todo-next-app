@@ -8,6 +8,11 @@ import { toast } from "react-toastify";
 
 function Tasks({ data, fetchTodos, next, back }) {
   const router = useRouter();
+  const toastOptions = {
+    position: "top-center",
+    autoClose: 1500,
+    pauseOnHover: false,
+  };
   const changeStatus = async (id, status) => {
     const res = await fetch("/api/todos", {
       method: "PATCH",
@@ -25,9 +30,9 @@ function Tasks({ data, fetchTodos, next, back }) {
       method: "DELETE",
       headers: { "Content-Type": "application/json" },
     });
-    const data=await res.json();
-    if(data.status==="success"){
-      toast.info("task successfully deleted!");
+    const data = await res.json();
+    if (data.status === "success") {
+      toast.info("task successfully deleted!", toastOptions);
       fetchTodos();
     }
   };
